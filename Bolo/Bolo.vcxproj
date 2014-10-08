@@ -24,7 +24,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v110</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -66,6 +66,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)\Bolo\ext\SFML-2.1\include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>SFML_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -78,14 +79,19 @@
   <ItemGroup>
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MovingState.cpp" />
     <ClCompile Include="NavGraph.cpp" />
+    <ClCompile Include="StandingState.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Hero.h" />
+    <ClInclude Include="HeroState.h" />
+    <ClInclude Include="MovingState.h" />
     <ClInclude Include="NavGraph.h" />
     <ClInclude Include="Renderable.h" />
+    <ClInclude Include="StandingState.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>
