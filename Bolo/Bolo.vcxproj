@@ -77,7 +77,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Attack.cpp" />
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MovingState.cpp" />
@@ -87,14 +86,17 @@
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Attack.h" />
+    <ClInclude Include="Event.h" />
+    <ClInclude Include="HealthGlobe.h" />
     <ClInclude Include="Hero.h" />
     <ClInclude Include="HeroState.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="MovingState.h" />
     <ClInclude Include="NavGraph.h" />
+    <ClInclude Include="Oberserver.h" />
     <ClInclude Include="Renderable.h" />
     <ClInclude Include="StandingState.h" />
+    <ClInclude Include="Subject.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="World.h" />

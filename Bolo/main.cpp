@@ -1,6 +1,7 @@
 #include "World.h"
 #include "UI.h"
 #include "InputHandler.h"
+#include "HealthGlobe.h"
 #include <SFML\System\Clock.hpp>
 
 int main()
@@ -24,6 +25,7 @@ int main()
 		sf::Time dt = deltaClock.restart();
 		world.update(window, dt.asSeconds());
 		world.render(window);
+		ui.render(window);
 		window.display();
 	}
 
