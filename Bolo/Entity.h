@@ -11,13 +11,11 @@
 class Entity : public Subject, Renderable
 {
 public:
-	Entity();
-	~Entity();
-
+	virtual ~Entity() { delete state_; }
 	virtual void setNavGraph(NavGraph* navGraph);
 	virtual void setColor(sf::Color color);
 	virtual void setName(std::string name);
-	virtual void update(float dt) = 0;
+	virtual void update(float dt);
 	virtual void render(sf::RenderWindow& window);
 	virtual void handleInput(sf::Event inputEvent);
 	virtual void move(sf::Vector2f to, float& dt);
@@ -25,6 +23,8 @@ public:
 	virtual sf::Vector2f getPos() const;
 	virtual std::vector<sf::Vector2f> getPath(float x, float y);
 protected:
+	Entity();
+
 	std::string name_;
 	NavGraph* navGraph_;
 	EntityState* state_;
@@ -34,4 +34,3 @@ protected:
 	float hp_;
 	float maxhp_;
 };
-

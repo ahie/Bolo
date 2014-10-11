@@ -1,7 +1,5 @@
-#include "World.h"
 #include "UI.h"
 #include "InputHandler.h"
-#include "HealthGlobe.h"
 #include <SFML\System\Clock.hpp>
 
 int main()
@@ -9,6 +7,8 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(800, 600), "Bolo");
 	sf::Clock deltaClock;
 
+	Terrain t;
+	Hero h;
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -16,7 +16,7 @@ int main()
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
-			inputHandler.handleInput(window,event);
+			//inputHandler.handleInput(window,event);
 		}
 		window.clear(sf::Color::Black);
 		sf::Time dt = deltaClock.restart();

@@ -6,7 +6,7 @@ class UI: public Renderable
 {
 public:
 	UI() {}
-	~UI() {}
+	virtual ~UI() {}
 	void addElement(UIElement* elem)
 	{
 		UIElements_.push_back(elem);
@@ -17,6 +17,15 @@ public:
 			if (uiElem->visible_)
 				uiElem->render(window);
 		}
+	}
+	virtual bool handleInput(sf::Event inputEvent)
+	{
+		for (std::vector<UIElement*>::reverse_iterator rit = UIElements_.rbegin();
+			rit != UIElements_.rend(); ++rit) {
+			if ((*rit)->handleInput(inputEvent))
+				return true;
+		}
+		return false;
 	}
 private:
 	std::vector<UIElement*> UIElements_;

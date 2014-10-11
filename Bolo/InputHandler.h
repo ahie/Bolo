@@ -1,24 +1,34 @@
 #pragma once
 #include "UI.h"
-#include "World.h"
+#include "Hero.h"
 
+// Chain of responsibility: 
+// If input event not handled by ui, 
+// give it to the player controlled character (hero).
 class InputHandler
 {
 public:
-	InputHandler(UI* ui, World* world) :
-	uiInterface_(ui), 
-	worldInterface_(world) {}
-	~InputHandler(){}
+	InputHandler() :
+		ui_(nullptr), 
+		hero_(nullptr) {}
+	~InputHandler() {}
+	void setUI(UI* ui) { ui_ = ui; }
+	void setHero(Hero* hero) { hero_ = hero; }
 	void handleInput(sf::RenderWindow& window, sf::Event event)
 	{
+		if (ui_ == nullptr) return;
+
+		// Set mouse position relative to view.
 		if (event.type == sf::Event::MouseButtonPressed) {
 			sf::Vector2f coord_pos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
 			event.mouseButton.x = coord_pos.x;
 			event.mouseButton.y = coord_pos.y;
-			worldInterface_->handleInput(event);
 		}
+
+		if (!ui_->handleInput(event) && hero_ != nullptr)
+			hero_->handleInput(event);
 	}
 private:
-	UI* uiInterface_;
-	World* worldInterface_;
+	UI* ui_;
+	Hero* hero_;
 };

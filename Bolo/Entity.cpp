@@ -34,6 +34,16 @@ void Entity::handleInput(sf::Event inputEvent)
 	}
 }
 
+void Entity::update(float dt)
+{
+	EntityState* state = state_->update(*this, dt);
+	if (state != nullptr) {
+		delete state_;
+		state_ = state;
+		state_->enter(*this);
+	}
+}
+
 void Entity::setName(std::string name)
 {
 	name_ = name;

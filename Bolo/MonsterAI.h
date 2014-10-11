@@ -6,6 +6,6 @@ class MonsterAI
 {
 public:
 	MonsterAI() {}
-	~MonsterAI() {}
+	virtual ~MonsterAI() {}
 	virtual void think(Monster* who);
 };

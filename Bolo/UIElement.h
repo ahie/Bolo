@@ -10,6 +10,7 @@ public:
 		clickable_(clickable) {}
 	virtual ~UIElement() {}
 	virtual void onClick() = 0;
+	virtual bool handleInput(sf::Event);
 protected:
 	bool visible_;
 	bool clickable_;
