@@ -32,7 +32,7 @@ void NavGraph::generate(World* world)
 	}
 }
 
-float NavGraph::heuristicEstimate(Vertex& start, Vertex& end) const
+float NavGraph::heuristicEstimate(Vertex start, Vertex end) const
 {
 	float dx = abs(start.pos_.x - end.pos_.x);
 	float dy = abs(start.pos_.y - end.pos_.y);

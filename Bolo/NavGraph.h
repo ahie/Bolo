@@ -27,7 +27,7 @@ public:
 	std::vector<sf::Vector2f> getPath(sf::Vector2f& start, sf::Vector2f& end);
 	void render(sf::RenderWindow& wnd);
 private:
-	float heuristicEstimate(Vertex& start, Vertex& end) const;
+	float heuristicEstimate(Vertex start, Vertex end) const;
 	std::vector<Vertex*> findNeighbors(Vertex* v);
 	Vertex* findClosestVertex(sf::Vector2f& pos);
 	std::vector<Vertex*> vertices_;

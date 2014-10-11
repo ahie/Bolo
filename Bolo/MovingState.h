@@ -1,6 +1,7 @@
 #pragma once
 #include "EntityState.h"
 #include <vector>
+
 class MovingState :
 	public EntityState
 {
