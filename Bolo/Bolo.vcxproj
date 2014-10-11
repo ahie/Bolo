@@ -83,7 +83,6 @@
     <ClCompile Include="NavGraph.cpp" />
     <ClCompile Include="StandingState.cpp" />
     <ClCompile Include="Tile.cpp" />
-    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity.h" />
@@ -93,15 +92,17 @@
     <ClInclude Include="EntityState.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="Monster.h" />
+    <ClInclude Include="MonsterAI.h" />
     <ClInclude Include="MovingState.h" />
     <ClInclude Include="NavGraph.h" />
     <ClInclude Include="Oberserver.h" />
     <ClInclude Include="Renderable.h" />
     <ClInclude Include="StandingState.h" />
     <ClInclude Include="Subject.h" />
+    <ClInclude Include="Terrain.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="UI.h" />
-    <ClInclude Include="World.h" />
+    <ClInclude Include="UIElement.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

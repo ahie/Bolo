@@ -1,6 +1,6 @@
 #include <math.h>
 #include "NavGraph.h"
-#include "World.h"
+#include "Terrain.h"
 
 NavGraph::NavGraph()
 {
@@ -13,11 +13,11 @@ NavGraph::~NavGraph()
 		delete v;
 }
 
-void NavGraph::generate(World* world)
+void NavGraph::generate(Terrain* from)
 {
-	for (int i = 0; i < TERRAIN_WIDTH * 2; i++) {
-		for (int j = 0; j < TERRAIN_HEIGHT * 2; j++) {
-			if (world->walkable(sf::Vector2f(i*TILE_WIDTH / 2 + TILE_WIDTH / 4, j*TILE_HEIGHT / 2 + TILE_HEIGHT / 4)))
+	for (int i = 0; i < from->width_ * 2; i++) {
+		for (int j = 0; j < from->height_ * 2; j++) {
+			if (from->walkable(sf::Vector2f(i*TILE_WIDTH / 2 + TILE_WIDTH / 4, j*TILE_HEIGHT / 2 + TILE_HEIGHT / 4)))
 				vertices_.push_back(new Vertex(i*TILE_WIDTH / 2 + TILE_WIDTH / 4, j*TILE_HEIGHT / 2 + TILE_HEIGHT / 4));
 		}
 	}

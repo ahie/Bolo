@@ -18,8 +18,6 @@ public:
 	}
 	virtual void render(sf::RenderWindow& window) 
 	{
-		if (visible_)
-		{
 			sf::RectangleShape bound(sf::Vector2f(5, 5));
 			bound.setFillColor(sf::Color(255,0,0));
 			bound.setOutlineColor(sf::Color(0, 0, 0));
@@ -30,8 +28,6 @@ public:
 			bound.setPosition(window.mapPixelToCoords(sf::Vector2i(50, 50)));
 			window.draw(bound);
 			window.draw(hp);
-
-		}
 	}
 	virtual void onClick() {}
 protected:

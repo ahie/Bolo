@@ -17,7 +17,7 @@ public:
 	virtual void setNavGraph(NavGraph* navGraph);
 	virtual void setColor(sf::Color color);
 	virtual void setName(std::string name);
-	virtual void update(float dt);
+	virtual void update(float dt) = 0;
 	virtual void render(sf::RenderWindow& window);
 	virtual void handleInput(sf::Event inputEvent);
 	virtual void move(sf::Vector2f to, float& dt);

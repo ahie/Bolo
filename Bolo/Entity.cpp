@@ -39,16 +39,6 @@ void Entity::setName(std::string name)
 	name_ = name;
 }
 
-void Entity::update(float dt)
-{
-	EntityState* state = state_->update(*this, dt);
-	if (state != nullptr) {
-		delete state_;
-		state_ = state;
-		state_->enter(*this);
-	}
-}
-
 void Entity::render(sf::RenderWindow& window)
 {
 	sf::CircleShape hero(2);

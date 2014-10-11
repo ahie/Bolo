@@ -7,9 +7,6 @@
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(800, 600), "Bolo");
-	UI ui;
-	World world;
-	InputHandler inputHandler(&ui, &world);
 	sf::Clock deltaClock;
 
 	while (window.isOpen())
@@ -23,9 +20,9 @@ int main()
 		}
 		window.clear(sf::Color::Black);
 		sf::Time dt = deltaClock.restart();
-		world.update(window, dt.asSeconds());
-		world.render(window);
-		ui.render(window);
+		//world.update(window, dt.asSeconds());
+		//world.render(window);
+		//ui.render(window);
 		window.display();
 	}
 

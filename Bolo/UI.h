@@ -1,19 +1,6 @@
 #pragma once
-#include "Renderable.h"
+#include "UIElement.h"
 #include <vector>
-
-class UIElement: public Renderable
-{
-public:
-	UIElement(bool visible, bool clickable):
-	visible_(visible),
-	clickable_(clickable) {}
-	virtual ~UIElement() {}
-	virtual void onClick() = 0;
-protected:
-	bool visible_;
-	bool clickable_;
-};
 
 class UI: public Renderable
 {
@@ -26,8 +13,10 @@ public:
 	}
 	virtual void render(sf::RenderWindow& window)
 	{
-		for (auto UIElement : UIElements_)
-			UIElement->render(window);
+		for (auto uiElem : UIElements_) {
+			if (uiElem->visible_)
+				uiElem->render(window);
+		}
 	}
 private:
 	std::vector<UIElement*> UIElements_;

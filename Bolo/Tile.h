@@ -15,4 +15,5 @@ private:
 		bool walkable[2][2];
 	};
 	SubtileInfo subtileInfo_;
+	// tileset offset
 };

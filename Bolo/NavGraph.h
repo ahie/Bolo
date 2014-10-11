@@ -1,16 +1,14 @@
 #pragma once
 #include <SFML\System\Vector2.hpp>
-#include <vector>
 #include <SFML\Graphics.hpp>
-class World;
+#include <vector>
 
 const float INF = 1000000000.0f;
 
+class Terrain;
+
 struct Vertex {
 	Vertex(float x, float y) : pos_(sf::Vector2f(x,y)) {}
-	bool operator==(const Vertex& other) const {
-		return pos_ == other.pos_;
-	}
 	sf::Vector2f pos_;
 	float fScore_;
 	float gScore_;
@@ -23,7 +21,7 @@ class NavGraph
 public:
 	NavGraph();
 	~NavGraph();
-	void generate(World* world);
+	void generate(Terrain* from);
 	std::vector<sf::Vector2f> getPath(sf::Vector2f& start, sf::Vector2f& end);
 	void render(sf::RenderWindow& wnd);
 private:
