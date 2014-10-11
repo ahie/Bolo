@@ -13,7 +13,7 @@ MovingState::~MovingState()
 {
 }
 
-HeroState* MovingState::handleInput(Hero& hero, sf::Event inputEvent)
+EntityState* MovingState::handleInput(Entity& hero, sf::Event inputEvent)
 {
 	if (inputEvent.type == sf::Event::MouseButtonPressed) {
 		if (inputEvent.mouseButton.button == sf::Mouse::Left) {
@@ -24,7 +24,7 @@ HeroState* MovingState::handleInput(Hero& hero, sf::Event inputEvent)
 	return nullptr;
 }
 
-HeroState* MovingState::update(Hero& hero, float dt)
+EntityState* MovingState::update(Entity& hero, float dt)
 {
 	if (path_.empty())
 		return new StandingState();
@@ -36,12 +36,12 @@ HeroState* MovingState::update(Hero& hero, float dt)
 	return nullptr;
 }
 
-void MovingState::enter(Hero& hero)
+void MovingState::enter(Entity& hero)
 {
 	hero.setColor(sf::Color(0, 0, 255));
 }
 
-void MovingState::enter(Hero& hero, sf::Event inputEvent)
+void MovingState::enter(Entity& hero, sf::Event inputEvent)
 {
 	this->enter(hero);
 	path_ = hero.getPath(inputEvent.mouseButton.x, 

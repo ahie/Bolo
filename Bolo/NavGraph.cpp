@@ -123,15 +123,15 @@ std::vector<sf::Vector2f> NavGraph::getPath(sf::Vector2f& start, sf::Vector2f& e
 
 void NavGraph::render(sf::RenderWindow& wnd)
 {
-	for (auto v : vertices_) {
-		for (auto u : v->neighbors_) {
-			sf::Vertex line[] =
-			{
-				u->pos_,
-				v->pos_
-			};
+	//for (auto v : vertices_) {
+	//	for (auto u : v->neighbors_) {
+	//		sf::Vertex line[] =
+	//		{
+	//			u->pos_,
+	//			v->pos_
+	//		};
 
-			wnd.draw(line, 2, sf::Lines);
-		}
-	}
+	//		wnd.draw(line, 2, sf::Lines);
+	//	}
+	//}
 }

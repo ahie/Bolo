@@ -1,31 +1,32 @@
-#include "Hero.h"
+#include "Entity.h"
 #include "StandingState.h"
 
 
-Hero::Hero() :
-	pos_(sf::Vector2f(50.0, 50.0)),
-	color_(sf::Color(0, 255, 0)),
-	state_(new StandingState()),
-	navGraph_(nullptr),
-	moveSpeed_(10.0f),
-	hp_(1000.0f),
-	maxhp_(1200.0f)
+Entity::Entity() :
+pos_(sf::Vector2f(50.0, 50.0)),
+color_(sf::Color(0, 255, 0)),
+state_(new StandingState()),
+navGraph_(nullptr),
+moveSpeed_(10.0f),
+hp_(1000.0f),
+maxhp_(1200.0f),
+name_("")
 {
 }
 
 
-Hero::~Hero()
+Entity::~Entity()
 {
 }
 
-void Hero::setNavGraph(NavGraph* navGraph)
+void Entity::setNavGraph(NavGraph* navGraph)
 {
 	navGraph_ = navGraph;
 }
 
-void Hero::handleInput(sf::Event inputEvent)
+void Entity::handleInput(sf::Event inputEvent)
 {
-	HeroState* state = state_->handleInput(*this, inputEvent);
+	EntityState* state = state_->handleInput(*this, inputEvent);
 	if (state != nullptr) {
 		delete state_;
 		state_ = state;
@@ -33,9 +34,14 @@ void Hero::handleInput(sf::Event inputEvent)
 	}
 }
 
-void Hero::update(float dt)
+void Entity::setName(std::string name)
 {
-	HeroState* state = state_->update(*this, dt);
+	name_ = name;
+}
+
+void Entity::update(float dt)
+{
+	EntityState* state = state_->update(*this, dt);
 	if (state != nullptr) {
 		delete state_;
 		state_ = state;
@@ -43,27 +49,27 @@ void Hero::update(float dt)
 	}
 }
 
-void Hero::render(sf::RenderWindow& window)
+void Entity::render(sf::RenderWindow& window)
 {
 	sf::CircleShape hero(2);
 	hero.setFillColor(color_);
-	hero.setPosition(pos_-sf::Vector2f(2.f,2.f));
+	hero.setPosition(pos_ - sf::Vector2f(2.f, 2.f));
 	window.draw(hero);
 }
 
-void Hero::setColor(sf::Color color)
+void Entity::setColor(sf::Color color)
 {
 	color_ = color;
 }
 
-sf::Vector2f Hero::getPos() const
+sf::Vector2f Entity::getPos() const
 {
 	return pos_;
 }
 
-std::vector<sf::Vector2f> Hero::getPath(float x, float y)
+std::vector<sf::Vector2f> Entity::getPath(float x, float y)
 {
-	return navGraph_->getPath(pos_,sf::Vector2f(x,y));
+	return navGraph_->getPath(pos_, sf::Vector2f(x, y));
 }
 
 
@@ -76,7 +82,7 @@ static sf::Vector2f normalize(const sf::Vector2f& source)
 		return source;
 }
 
-void Hero::move(sf::Vector2f to, float& dt)
+void Entity::move(sf::Vector2f to, float& dt)
 {
 	sf::Vector2f dirVec = to - pos_;
 	dirVec = normalize(dirVec);
@@ -85,14 +91,14 @@ void Hero::move(sf::Vector2f to, float& dt)
 	if (dt2 < dt) {
 		dt -= dt2;
 		pos_ = to;
-	} 
+	}
 	else {
 		pos_ += moveSpeed_ * dirVec * dt;
 		dt = -0.1f;
 	}
 }
 
-float Hero::getPercentHP()
+float Entity::getPercentHP()
 {
 	return hp_ / maxhp_;
 }

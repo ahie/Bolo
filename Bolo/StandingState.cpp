@@ -13,12 +13,12 @@ StandingState::~StandingState()
 {
 }
 
-void StandingState::enter(Hero& hero)
+void StandingState::enter(Entity& hero)
 {
 	hero.setColor(sf::Color(0, 255, 0));
 }
 
-HeroState* StandingState::handleInput(Hero& hero, sf::Event inputEvent)
+EntityState* StandingState::handleInput(Entity& hero, sf::Event inputEvent)
 {
 	if (inputEvent.type == sf::Event::MouseButtonPressed) {
 		if (inputEvent.mouseButton.button == sf::Mouse::Left) {
@@ -28,12 +28,12 @@ HeroState* StandingState::handleInput(Hero& hero, sf::Event inputEvent)
 	return nullptr;
 }
 
-void StandingState::enter(Hero& hero, sf::Event inputEvent)
+void StandingState::enter(Entity& hero, sf::Event inputEvent)
 {
 	this->enter(hero);
 }
 
-HeroState* StandingState::update(Hero& hero, float dt) 
+EntityState* StandingState::update(Entity& hero, float dt) 
 {
 	return nullptr;
 }
