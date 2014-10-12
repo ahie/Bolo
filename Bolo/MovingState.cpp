@@ -1,5 +1,6 @@
 #include "MovingState.h"
 #include "StandingState.h"
+#include "AttackingState.h"
 #include "Hero.h"
 #include <SFML\Graphics\Color.hpp>
 
@@ -16,6 +17,9 @@ EntityState* MovingState::handleInput(Entity& entity, sf::Event inputEvent)
 		if (inputEvent.mouseButton.button == sf::Mouse::Right) {
 			path_ = entity.getPath(inputEvent.mouseButton.x,
 									inputEvent.mouseButton.y);
+		}
+		if (inputEvent.mouseButton.button == sf::Mouse::Right) {
+			return new AttackingState();
 		}
 	}
 	return nullptr;

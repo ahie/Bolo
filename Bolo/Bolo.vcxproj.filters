@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Entity.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="MovingState.cpp">
+      <Filter>Entities\States</Filter>
+    </ClCompile>
+    <ClCompile Include="StandingState.cpp">
+      <Filter>Entities\States</Filter>
+    </ClCompile>
+    <ClCompile Include="NavGraph.cpp">
+      <Filter>Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Terrain</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="InputHandler.h" />
+    <ClInclude Include="Renderable.h" />
+    <ClInclude Include="Entity.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Hero.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingState.h">
+      <Filter>Entities\States</Filter>
+    </ClInclude>
+    <ClInclude Include="StandingState.h">
+      <Filter>Entities\States</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityState.h">
+      <Filter>Entities\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Oberserver.h">
+      <Filter>Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="Subject.h">
+      <Filter>Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterAI.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="NavGraph.h">
+      <Filter>Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain.h">
+      <Filter>Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIElement.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthGlobe.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackingState.h">
+      <Filter>Entities\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Attack.h">
+      <Filter>Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackHandler.h">
+      <Filter>Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="MissileHandler.h">
+      <Filter>Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Entities">
+      <UniqueIdentifier>{e7d35f43-39ec-4f60-9eb7-06ac794d6489}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\States">
+      <UniqueIdentifier>{bbc13b69-972f-45ff-93f0-31e59fcc9531}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Terrain">
+      <UniqueIdentifier>{d3811913-6a1b-4070-b2c8-954df68883fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{f0b5b0c9-a694-444c-8b89-e86b4590af79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Observer">
+      <UniqueIdentifier>{9bd6132d-9fe0-4320-a20a-50241f9965d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Attack">
+      <UniqueIdentifier>{8766dfd6-ac10-4688-b8d6-688145ad43fa}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -11,7 +11,7 @@
 class Entity : public Subject, Renderable
 {
 public:
-	virtual ~Entity() { delete state_; }
+	virtual ~Entity();
 	virtual void setNavGraph(NavGraph* navGraph);
 	virtual void setColor(sf::Color color);
 	virtual void setName(std::string name);
@@ -19,9 +19,11 @@ public:
 	virtual void render(sf::RenderWindow& window);
 	virtual void handleInput(sf::Event inputEvent);
 	virtual void move(sf::Vector2f to, float& dt);
+	virtual void attack();
 	virtual float getPercentHP();
 	virtual sf::Vector2f getPos() const;
 	virtual std::vector<sf::Vector2f> getPath(float x, float y);
+	virtual bool checkCollision(sf::Vector2f at);
 protected:
 	Entity();
 
@@ -30,6 +32,7 @@ protected:
 	EntityState* state_;
 	sf::Color color_;
 	sf::Vector2f pos_;
+	float collisionRadius_;
 	float moveSpeed_;
 	float hp_;
 	float maxhp_;

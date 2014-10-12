@@ -10,13 +10,20 @@ navGraph_(nullptr),
 moveSpeed_(10.0f),
 hp_(1000.0f),
 maxhp_(1200.0f),
-name_("")
+name_(""),
+collisionRadius_(10.0f)
 {
 }
 
 
 Entity::~Entity()
 {
+	delete state_;
+}
+
+bool Entity::checkCollision(sf::Vector2f at)
+{
+	return sqrt((pos_.x - at.x)*(pos_.x - at.x) + (pos_.y - at.y)*(pos_.y - at.y)) < collisionRadius_;
 }
 
 void Entity::setNavGraph(NavGraph* navGraph)
@@ -30,8 +37,13 @@ void Entity::handleInput(sf::Event inputEvent)
 	if (state != nullptr) {
 		delete state_;
 		state_ = state;
-		state_->enter(*this, inputEvent);
+		state_->enter(*this);
 	}
+}
+
+void Entity::attack()
+{
+
 }
 
 void Entity::update(float dt)

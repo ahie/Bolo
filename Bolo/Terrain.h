@@ -38,6 +38,20 @@ public:
 		else subtileY = 0;
 		return (tiles_ + x*height_ + y)->getSubtileWalkable(subtileX, subtileY);
 	}
+	bool checkCollision(sf::Vector2f at)
+	{
+		if (at.x > width_*TILE_WIDTH || at.x < 0.0f ||
+			at.y > height_*TILE_HEIGHT || at.y < 0.0f ) return true;
+		int x = (int)(at.x / TILE_WIDTH);
+		int y = (int)(at.y / TILE_HEIGHT);
+		int subtileX;
+		int subtileY;
+		if (at.x / TILE_WIDTH - x >= 0.5f) subtileX = 1;
+		else subtileX = 0;
+		if (at.y / TILE_WIDTH - y >= 0.5f) subtileY = 1;
+		else subtileY = 0;
+		return (tiles_ + x*height_ + y)->getSubtileCollide(subtileX, subtileY);
+	}
 private:
 	int width_;
 	int height_;
