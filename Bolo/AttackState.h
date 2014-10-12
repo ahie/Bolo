@@ -1,15 +1,15 @@
 #pragma once
-#include <SFML\Window\Event.hpp>
+#include "EntityState.h"
 
-class Entity;
-
-class EntityState
+class AttackState : public EntityState
 {
 public:
-	EntityState() {}
-	virtual ~EntityState() {}
+	AttackState() {}
+	virtual ~AttackState() {}
 	virtual void enter(Entity& entity) = 0;
 	virtual EntityState* update(Entity& entity, float dt) = 0;
 	virtual EntityState* handleInput(Entity& entity, sf::Event inputEvent) = 0;
+private:
+	float swingTime_;
+	float attackTime_;
 };
-

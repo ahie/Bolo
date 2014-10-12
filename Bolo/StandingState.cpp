@@ -1,6 +1,6 @@
 #include "StandingState.h"
 #include "MovingState.h"
-#include "Hero.h"
+#include "entity.h"
 #include <SFML\Graphics\Color.hpp>
 
 
@@ -13,27 +13,22 @@ StandingState::~StandingState()
 {
 }
 
-void StandingState::enter(Entity& hero)
+void StandingState::enter(Entity& entity)
 {
-	hero.setColor(sf::Color(0, 255, 0));
+	entity.setColor(sf::Color(0, 255, 0));
 }
 
-EntityState* StandingState::handleInput(Entity& hero, sf::Event inputEvent)
+EntityState* StandingState::handleInput(Entity& entity, sf::Event inputEvent)
 {
 	if (inputEvent.type == sf::Event::MouseButtonPressed) {
 		if (inputEvent.mouseButton.button == sf::Mouse::Left) {
-			return new MovingState();
+			return new MovingState(entity,inputEvent.mouseButton.x,inputEvent.mouseButton.y);
 		}
 	}
 	return nullptr;
 }
 
-void StandingState::enter(Entity& hero, sf::Event inputEvent)
-{
-	this->enter(hero);
-}
-
-EntityState* StandingState::update(Entity& hero, float dt) 
+EntityState* StandingState::update(Entity& entity, float dt) 
 {
 	return nullptr;
 }

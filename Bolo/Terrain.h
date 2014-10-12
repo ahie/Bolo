@@ -18,6 +18,7 @@ public:
 				(tiles_ + i*height_ + j)->setRandomSubtiles();
 			}
 		}
+		navGraph_ = new NavGraph;
 		navGraph_->generate(this);
 	}
 	~Terrain() 

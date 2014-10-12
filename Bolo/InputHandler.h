@@ -18,7 +18,7 @@ public:
 	{
 		if (ui_ == nullptr) return;
 
-		// Set mouse position relative to view.
+		// Set event's mouse coordinates relative to view.
 		if (event.type == sf::Event::MouseButtonPressed) {
 			sf::Vector2f coord_pos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
 			event.mouseButton.x = coord_pos.x;

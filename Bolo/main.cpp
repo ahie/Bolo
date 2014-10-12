@@ -7,8 +7,6 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(800, 600), "Bolo");
 	sf::Clock deltaClock;
 
-	Terrain t;
-	Hero h;
 	while (window.isOpen())
 	{
 		sf::Event event;

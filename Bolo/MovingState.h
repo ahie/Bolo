@@ -6,12 +6,11 @@ class MovingState :
 	public EntityState
 {
 public:
-	MovingState();
+	MovingState(Entity& entity, float x, float y);
 	~MovingState();
-	virtual void enter(Entity& hero);
-	virtual void enter(Entity& hero, sf::Event inputEvent);
-	virtual EntityState* update(Entity& hero, float dt);
-	virtual EntityState* handleInput(Entity& hero, sf::Event inputEvent);
+	virtual void enter(Entity& entity);
+	virtual EntityState* update(Entity& entity, float dt);
+	virtual EntityState* handleInput(Entity& entity, sf::Event inputEvent);
 private:
 	std::vector<sf::Vector2f> path_;
 };
