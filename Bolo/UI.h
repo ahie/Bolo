@@ -20,6 +20,7 @@ public:
 	}
 	virtual bool handleInput(sf::Event inputEvent)
 	{
+		// reverse iteration on UIElements since back() is the topmost element
 		for (std::vector<UIElement*>::reverse_iterator rit = UIElements_.rbegin();
 			rit != UIElements_.rend(); ++rit) {
 			if ((*rit)->handleInput(inputEvent))

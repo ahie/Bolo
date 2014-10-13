@@ -3,7 +3,7 @@
 #include <SFML\Graphics.hpp>
 #include <vector>
 
-const float INF = 1000000000.0f;
+const float INF = 100000000000.0f;
 
 class Terrain;
 

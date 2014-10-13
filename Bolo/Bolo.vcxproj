@@ -83,6 +83,7 @@
   <ItemGroup>
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MonsterAI.cpp" />
     <ClCompile Include="MovingState.cpp" />
     <ClCompile Include="NavGraph.cpp" />
     <ClCompile Include="StandingState.cpp" />
@@ -90,16 +91,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Attack.h" />
-    <ClInclude Include="AttackHandler.h" />
     <ClInclude Include="AttackingState.h" />
-    <ClInclude Include="Collision.h" />
+    <ClInclude Include="DeathState.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Event.h" />
+    <ClInclude Include="Faction.h" />
     <ClInclude Include="HealthGlobe.h" />
     <ClInclude Include="Hero.h" />
     <ClInclude Include="EntityState.h" />
+    <ClInclude Include="HeroDeath.h" />
     <ClInclude Include="InputHandler.h" />
-    <ClInclude Include="MissileHandler.h" />
+    <ClInclude Include="Level.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="MonsterAI.h" />
     <ClInclude Include="MovingState.h" />

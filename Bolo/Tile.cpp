@@ -15,13 +15,13 @@ void Tile::setRandomSubtiles()
 {
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < 2; j++) {
-			if (rand() % 10 < 3) {
+			if (rand() % 10 < 1) {
 				subtileInfo_.walkable[i][j] = false;
-				subtileInfo_.collidable[i][j] = false;
+				subtileInfo_.collidable[i][j] = true;
 			}
 			else {
 				subtileInfo_.walkable[i][j] = true;
-				subtileInfo_.collidable[i][j] = true;
+				subtileInfo_.collidable[i][j] = false;
 			}
 		}
 	}

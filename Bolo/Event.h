@@ -1,2 +1,2 @@
 #pragma once
-enum Event { HERO_HEALTH_CHANGED, SOUND };
+enum Event { HERO_HEALTH_CHANGED, HEALTH_CHANGED, SOUND, HERO_DIED };

@@ -1,17 +1,22 @@
 #include "Entity.h"
 #include "StandingState.h"
+#include "DeathState.h"
+#include "Level.h"
 
 
 Entity::Entity() :
-pos_(sf::Vector2f(50.0, 50.0)),
-color_(sf::Color(0, 255, 0)),
-state_(new StandingState()),
-navGraph_(nullptr),
-moveSpeed_(10.0f),
-hp_(1000.0f),
-maxhp_(1200.0f),
-name_(""),
-collisionRadius_(10.0f)
+	pos_(sf::Vector2f(50.0, 50.0)),
+	color_(sf::Color(0, 255, 0)),
+	state_(new StandingState()),
+	moveSpeed_(25.0f),
+	hp_(100.0f),
+	maxhp_(1200.0f),
+	name_("Default name"),
+	collisionRadius_(10.0f),
+	navGraph_(nullptr),
+	level_(nullptr),
+	alive_(true),
+	faction_(NEUTRAL)
 {
 }
 
@@ -21,14 +26,10 @@ Entity::~Entity()
 	delete state_;
 }
 
-bool Entity::checkCollision(sf::Vector2f at)
+void Entity::setLevel(Level* level)
 {
-	return sqrt((pos_.x - at.x)*(pos_.x - at.x) + (pos_.y - at.y)*(pos_.y - at.y)) < collisionRadius_;
-}
-
-void Entity::setNavGraph(NavGraph* navGraph)
-{
-	navGraph_ = navGraph;
+	level_ = level;
+	navGraph_ = level_->getNavGraph();
 }
 
 void Entity::handleInput(sf::Event inputEvent)
@@ -41,9 +42,9 @@ void Entity::handleInput(sf::Event inputEvent)
 	}
 }
 
-void Entity::attack()
+void Entity::attack(sf::Vector2f direction)
 {
-
+	level_->addAttack(new Missile(SINGLE_TARGET, PURE, 50.0f, 5.0f, pos_, faction_, 15.0f, direction));
 }
 
 void Entity::update(float dt)
@@ -56,17 +57,44 @@ void Entity::update(float dt)
 	}
 }
 
+void Entity::damage(Attack* attack)
+{
+	hp_ -= attack->getDamage();
+	notify(HEALTH_CHANGED);
+	if (hp_ < 0.0f) {
+		delete state_;
+		state_ = new DeathState();
+		state_->enter(*this);
+	}
+}
+
+void Entity::kill()
+{
+	alive_ = false;
+}
+
+void Entity::setPosition(sf::Vector2f pos)
+{
+	pos_ = pos;
+}
+
 void Entity::setName(std::string name)
 {
 	name_ = name;
 }
 
+Faction Entity::faction() const
+{
+	return faction_;
+}
+
 void Entity::render(sf::RenderWindow& window)
 {
-	sf::CircleShape hero(2);
-	hero.setFillColor(color_);
-	hero.setPosition(pos_ - sf::Vector2f(2.f, 2.f));
-	window.draw(hero);
+	sf::CircleShape entity(collisionRadius_);
+	entity.setFillColor(color_);
+	entity.setOrigin(collisionRadius_, collisionRadius_);
+	entity.setPosition(pos_);
+	window.draw(entity);
 }
 
 void Entity::setColor(sf::Color color)
@@ -108,6 +136,12 @@ void Entity::move(sf::Vector2f to, float& dt)
 		pos_ += moveSpeed_ * dirVec * dt;
 		dt = -0.1f;
 	}
+}
+
+bool Entity::checkCollision(sf::Vector2f at, float radius) const
+{
+	return (pos_.x - at.x)*(pos_.x - at.x) +
+		(pos_.y - at.y)*(pos_.y - at.y) <= (collisionRadius_ + radius)*(collisionRadius_ + radius);
 }
 
 float Entity::getPercentHP()

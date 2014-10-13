@@ -5,10 +5,14 @@
 class Monster : public Entity 
 {
 public:
-	Monster() {}
+	friend class MonsterAI;
+	Monster() : ai_(nullptr) { faction_ = FOE; }
 	~Monster() {}
+	void setAI(MonsterAI* ai) { ai_ = ai; }
 	virtual void update(float dt)
 	{
+		if (!alive_)
+			return;
 		ai_->think(this);
 		Entity::update(dt);
 	}

@@ -1,3 +1,4 @@
+#pragma once
 #include "Oberserver.h"
 #include "Hero.h"
 #include "UI.h"
@@ -16,18 +17,18 @@ public:
 			hpPercent_ = hero_->getPercentHP();
 		}
 	}
-	virtual void render(sf::RenderWindow& window) 
+	virtual void render(sf::RenderWindow& window)
 	{
-			sf::RectangleShape bound(sf::Vector2f(5, 5));
-			bound.setFillColor(sf::Color(255,0,0));
-			bound.setOutlineColor(sf::Color(0, 0, 0));
-			bound.setOutlineThickness(0.1);
-			bound.setPosition(window.mapPixelToCoords(sf::Vector2i(50,50)));
-			sf::RectangleShape hp(sf::Vector2f(5, 5 * hpPercent_));
-			hp.setFillColor(sf::Color(0, 255, 0));
-			bound.setPosition(window.mapPixelToCoords(sf::Vector2i(50, 50)));
-			window.draw(bound);
-			window.draw(hp);
+		sf::RectangleShape bound(sf::Vector2f(5, 5));
+		bound.setFillColor(sf::Color(255,0,0));
+		bound.setOutlineColor(sf::Color(0, 0, 0));
+		bound.setOutlineThickness(0.1);
+		bound.setPosition(window.mapPixelToCoords(sf::Vector2i(50,50)));
+		sf::RectangleShape hp(sf::Vector2f(5, 5 * hpPercent_));
+		hp.setFillColor(sf::Color(0, 255, 0));
+		bound.setPosition(window.mapPixelToCoords(sf::Vector2i(50, 50)));
+		window.draw(bound);
+		window.draw(hp);
 	}
 	virtual void onClick() {}
 protected:

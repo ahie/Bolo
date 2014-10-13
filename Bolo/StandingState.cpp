@@ -35,7 +35,7 @@ EntityState* StandingState::handleInput(Entity& entity, sf::Event inputEvent)
 			return new MovingState(entity,inputEvent.mouseButton.x,inputEvent.mouseButton.y);
 		}
 		if (inputEvent.mouseButton.button == sf::Mouse::Left) {
-			sf::Vector2f attackDirection = normalize(sf::Vector2f(inputEvent.mouseButton.x, inputEvent.mouseButton.x) - entity.getPos());
+			sf::Vector2f attackDirection = normalize(sf::Vector2f(inputEvent.mouseButton.x, inputEvent.mouseButton.y) - entity.getPos());
 			return new AttackingState(attackDirection);
 		}
 	}

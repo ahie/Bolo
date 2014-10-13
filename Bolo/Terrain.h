@@ -1,8 +1,9 @@
 #pragma once
 #include "Tile.h"
 #include "NavGraph.h"
+#include "Renderable.h"
 
-class Terrain
+class Terrain: public Renderable
 {
 public:
 	friend class NavGraph;
@@ -51,6 +52,14 @@ public:
 		if (at.y / TILE_WIDTH - y >= 0.5f) subtileY = 1;
 		else subtileY = 0;
 		return (tiles_ + x*height_ + y)->getSubtileCollide(subtileX, subtileY);
+	}
+	NavGraph* getNavGraph()
+	{
+		return navGraph_;
+	}
+	void render(sf::RenderWindow& window)
+	{
+		navGraph_->render(window);
 	}
 private:
 	int width_;
