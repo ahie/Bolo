@@ -7,7 +7,11 @@
 class AttackingState : public EntityState
 {
 public:
-	AttackingState(): swingTime_(1.2), attackTime_(1.5), attacked_(false) {}
+	AttackingState(sf::Vector2f direction): 
+		swingTime_(1.2), 
+		attackTime_(1.5), 
+		attacked_(false), 
+		direction_(direction) {}
 	virtual ~AttackingState() {}
 	virtual void enter(Entity& entity)
 	{
@@ -18,7 +22,7 @@ public:
 		swingTime_ -= dt;
 		attackTime_ -= dt;
 		if (swingTime_ < 0.f && !attacked_) {
-			entity.attack();
+			entity.attack(direction_);
 			attacked_ = true;
 		}
 		if (attackTime_ < 0.f) return new StandingState();
@@ -26,6 +30,7 @@ public:
 	}
 	virtual EntityState* handleInput(Entity& entity, sf::Event inputEvent) { return nullptr; }
 private:
+	sf::Vector2f direction_;
 	float swingTime_;
 	float attackTime_;
 	bool attacked_;
