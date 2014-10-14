@@ -84,9 +84,11 @@
     <ClInclude Include="DeathState.h">
       <Filter>Entities\States</Filter>
     </ClInclude>
-    <ClInclude Include="Faction.h" />
     <ClInclude Include="HeroDeath.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Faction.h">
+      <Filter>Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

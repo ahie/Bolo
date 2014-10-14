@@ -13,6 +13,8 @@ public:
 		visible_ = true;
 	}
 	virtual void render(sf::RenderWindow& window) {
+		// TODO: proper centering, load font somewhere else
+		// Exit to menu button.
 		sf::Text text;
 		sf::Font font;
 		font.loadFromFile("diablo_h.ttf");
