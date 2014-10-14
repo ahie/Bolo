@@ -2,6 +2,7 @@
 #include "Entity.h"
 #include "Terrain.h"
 #include "Attack.h"
+#include "Missile.h"
 
 #include <vector>
 

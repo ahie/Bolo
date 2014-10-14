@@ -3,6 +3,7 @@
 
 #include <SFML\System\Vector2.hpp>
 
+enum AttackClass { MELEE, MISSILE, SPELL };
 enum AttackType { AOE, SINGLE_TARGET };
 enum DamageType { PURE, FIRE, LIGHTNING, CHAOS };
 
@@ -35,33 +36,25 @@ protected:
 	float hitRadius_;
 };
 
-class Missile : public Attack, public Renderable
+struct AttackDescriptor
 {
-public:
-	Missile(AttackType atype, 
-		DamageType dtype, 
-		float dmg, float 
-		hitrad, sf::Vector2f pos,
-		Faction source,
-		float speed,
-		sf::Vector2f dir) :
-			Attack(atype, dtype, dmg, hitrad, pos, source),
-			speed_(speed),
-			dirVec_(dir),
-			color_(sf::Color(100,0,100)) {}
-	~Missile() {}
-	void advance(float dt) { pos_ += speed_ * dirVec_; }
-	virtual void render(sf::RenderWindow& window)
-	{
-		sf::CircleShape missile(hitRadius_);
-		missile.setFillColor(color_);
-		missile.setOrigin(hitRadius_, hitRadius_);
-		missile.setPosition(pos_);
-		window.draw(missile);
-	}
-private:
-	float speed_;
-	sf::Vector2f dirVec_;
-	// has graphics
-	sf::Color color_;
+	AttackDescriptor(float dmg, 
+		float hitRad, 
+		float mSpeed, 
+		AttackClass aClass, 
+		AttackType aType, 
+		DamageType dType) :
+			damage(dmg), 
+			hitRadius(hitRad), 
+			missileSpeed(mSpeed), 
+			atckClass(aClass), 
+			atckType(aType), 
+			dmgType(dType) {}
+
+	float damage;
+	float hitRadius;
+	float missileSpeed;
+	AttackClass atckClass;
+	AttackType atckType;
+	DamageType dmgType;
 };

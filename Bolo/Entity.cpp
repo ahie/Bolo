@@ -16,7 +16,8 @@ Entity::Entity() :
 	navGraph_(nullptr),
 	level_(nullptr),
 	alive_(true),
-	faction_(NEUTRAL)
+	faction_(NEUTRAL),
+	aDescription_(AttackDescriptor(10.0f,5.0f,10.0f,MISSILE,SINGLE_TARGET,PURE))
 {
 }
 
@@ -44,7 +45,29 @@ void Entity::handleInput(sf::Event inputEvent)
 
 void Entity::attack(sf::Vector2f direction)
 {
-	level_->addAttack(new Missile(SINGLE_TARGET, PURE, 50.0f, 5.0f, pos_, faction_, 15.0f, direction));
+	// TODO: Construct missile with Attack?
+	switch (aDescription_.atckClass) {
+	case MELEE:
+		level_->addAttack(
+			new Attack(aDescription_.atckType, 
+			aDescription_.dmgType, 
+			aDescription_.damage,
+			aDescription_.hitRadius,
+			pos_ + direction*collisionRadius_, faction_));
+		break;
+	case MISSILE:
+		level_->addAttack(
+			new Missile(aDescription_.atckType,
+			aDescription_.dmgType,
+			aDescription_.damage,
+			aDescription_.hitRadius,
+			pos_ + direction*collisionRadius_, faction_,
+			aDescription_.missileSpeed,
+			direction));
+		break;
+	default:
+		break;
+	}
 }
 
 void Entity::update(float dt)

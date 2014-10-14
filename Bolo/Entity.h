@@ -40,6 +40,7 @@ protected:
 	EntityState* state_;
 	sf::Color color_;
 	sf::Vector2f pos_;
+	AttackDescriptor aDescription_;
 	float collisionRadius_;
 	float moveSpeed_;
 	float hp_;
