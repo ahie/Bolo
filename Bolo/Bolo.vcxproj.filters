@@ -20,6 +20,12 @@
     <ClCompile Include="MonsterAI.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
+    <ClCompile Include="Hero.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Inventory.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InputHandler.h" />
@@ -93,6 +99,12 @@
     <ClInclude Include="Missile.h">
       <Filter>Attack</Filter>
     </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventory.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Entities">
@@ -112,6 +124,9 @@
     </Filter>
     <Filter Include="Level">
       <UniqueIdentifier>{d3811913-6a1b-4070-b2c8-954df68883fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Item">
+      <UniqueIdentifier>{8556cf8c-a9d5-4ad6-bd32-8dbde517de92}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

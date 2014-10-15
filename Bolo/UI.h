@@ -14,8 +14,7 @@ public:
 	virtual void render(sf::RenderWindow& window)
 	{
 		for (auto uiElem : UIElements_) {
-			if (uiElem->visible_)
-				uiElem->render(window);
+			uiElem->render(window);
 		}
 	}
 	virtual bool handleInput(sf::Event inputEvent)

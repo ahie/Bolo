@@ -17,7 +17,7 @@ Entity::Entity() :
 	level_(nullptr),
 	alive_(true),
 	faction_(NEUTRAL),
-	aDescription_(AttackDescriptor(10.0f,5.0f,10.0f,MISSILE,SINGLE_TARGET,PURE))
+	aDescription_(AttackDescriptor(10.0f,5.0f,0.2f,MISSILE,SINGLE_TARGET,PURE))
 {
 }
 

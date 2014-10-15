@@ -18,15 +18,15 @@ public:
 	{
 		if (ui_ == nullptr) return;
 
-		// Set event's mouse coordinates relative to view.
-		if (event.type == sf::Event::MouseButtonPressed) {
-			sf::Vector2f coord_pos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-			event.mouseButton.x = coord_pos.x;
-			event.mouseButton.y = coord_pos.y;
-		}
-
-		if (!ui_->handleInput(event) && hero_ != nullptr)
+		if (!ui_->handleInput(event) && hero_ != nullptr) {
+			// Set event's mouse coordinates relative to view.
+			if (event.type == sf::Event::MouseButtonPressed) {
+				sf::Vector2f coord_pos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+				event.mouseButton.x = coord_pos.x;
+				event.mouseButton.y = coord_pos.y;
+			}
 			hero_->handleInput(event);
+		}
 	}
 private:
 	UI* ui_;

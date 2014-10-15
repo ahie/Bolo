@@ -1,7 +1,7 @@
 #pragma once
 #include "Oberserver.h"
 #include "Hero.h"
-#include "UI.h"
+#include "UIElement.h"
 
 class HealthGlobe : public UIElement, Observer
 {
@@ -30,7 +30,6 @@ public:
 		window.draw(bound);
 		window.draw(hp);
 	}
-	virtual void onClick() {}
 protected:
 	float hpPercent_;
 	Hero* hero_;
