@@ -98,7 +98,7 @@ int main()
 		view.setSize(sf::Vector2f(640, 480));
 		window.setView(view);
 
-		window.clear(sf::Color::Black);
+		window.clear(sf::Color(50,50,50));
 		level.render(window);
 		gameUI.render(window);
 		window.display();
