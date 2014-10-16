@@ -24,7 +24,7 @@ void NavGraph::generate(Terrain* from)
 	for (auto v : vertices_){
 		std::vector<Vertex*> neighbors;
 		for (auto u : vertices_) {
-			if (v != u && sqrt(pow(v->pos_.x - u->pos_.x, 2) + pow(v->pos_.y - u->pos_.y, 2)) < 20) {
+			if (v != u && sqrt(pow(v->pos_.x - u->pos_.x, 2) + pow(v->pos_.y - u->pos_.y, 2)) < TILE_WIDTH) {
 				neighbors.push_back(u);
 			}
 		}
@@ -68,6 +68,7 @@ Vertex* NavGraph::findClosestVertex(sf::Vector2f& pos)
 	return closest;
 }
 
+// A* search
 std::vector<sf::Vector2f> NavGraph::getPath(sf::Vector2f& start, sf::Vector2f& end)
 {
 	std::vector<sf::Vector2f> path;
@@ -95,6 +96,8 @@ std::vector<sf::Vector2f> NavGraph::getPath(sf::Vector2f& start, sf::Vector2f& e
 				current = next;
 				next = next->cameFrom_;
 			}
+			//path.push_back(current->pos_); 
+			//Don't walk to first vertex => Causes tunneling problems but makes moving less jerky
 			return path;
 		}
 		openSet.erase(find(openSet.begin(),openSet.end(),current));
@@ -118,17 +121,21 @@ std::vector<sf::Vector2f> NavGraph::getPath(sf::Vector2f& start, sf::Vector2f& e
 			}
 		}
 	}
-	return path; //ei reittiä
+	return path; // No path found
 }
 
 void NavGraph::render(sf::RenderWindow& wnd)
 {
 	for (auto v : vertices_) {
 		for (auto u : v->neighbors_) {
+			sf::Vector2f i = u->pos_;
+			i = sf::Vector2f(i.x - i.y, (i.x + i.y) / 2.0f);
+			sf::Vector2f j = v->pos_;
+			j = sf::Vector2f(j.x - j.y, (j.x + j.y) / 2.0f);
 			sf::Vertex line[] =
 			{
-				u->pos_,
-				v->pos_
+				i,
+				j
 			};
 
 			wnd.draw(line, 2, sf::Lines);

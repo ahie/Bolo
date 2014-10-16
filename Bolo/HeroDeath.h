@@ -10,7 +10,8 @@ public:
 		UIElement(false, false) {}
 	~HeroDeath() {}
 	virtual void onNotify(Subject* subject, Event event) {
-		visible_ = true;
+		if (event == HERO_DIED)
+			visible_ = true;
 	}
 	virtual void render(sf::RenderWindow& window) {
 		if (visible_) {
@@ -18,7 +19,7 @@ public:
 			// Exit to menu button.
 			sf::Text text;
 			sf::Font font;
-			font.loadFromFile("diablo_h.ttf");
+			font.loadFromFile("Resources/Fonts/diablo_h.ttf");
 			text.setFont(font);
 			text.setString("YOU HAVE DIED.");
 			text.setCharacterSize(35);

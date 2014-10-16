@@ -3,6 +3,8 @@
 #include "DeathState.h"
 #include "Level.h"
 
+#include <iostream>
+
 
 Entity::Entity() :
 	pos_(sf::Vector2f(50.0, 50.0)),
@@ -17,7 +19,9 @@ Entity::Entity() :
 	level_(nullptr),
 	alive_(true),
 	faction_(NEUTRAL),
-	aDescription_(AttackDescriptor(10.0f,5.0f,0.2f,MISSILE,SINGLE_TARGET,PURE))
+	aDescription_(AttackDescriptor(50.0f, 5.0f, 0.2f, MISSILE, SINGLE_TARGET, PURE)),
+	animTime_(0.0f),
+	attackSpeed_(0.3f)
 {
 }
 
@@ -33,9 +37,9 @@ void Entity::setLevel(Level* level)
 	navGraph_ = level_->getNavGraph();
 }
 
-void Entity::handleInput(sf::Event inputEvent)
+void Entity::handleInput(EntityEvent event)
 {
-	EntityState* state = state_->handleInput(*this, inputEvent);
+	EntityState* state = state_->handleInput(*this, event);
 	if (state != nullptr) {
 		delete state_;
 		state_ = state;
@@ -45,6 +49,8 @@ void Entity::handleInput(sf::Event inputEvent)
 
 void Entity::attack(sf::Vector2f direction)
 {
+	updateOrientation(direction);
+
 	// TODO: Construct missile with Attack?
 	switch (aDescription_.atckClass) {
 	case MELEE:
@@ -72,6 +78,7 @@ void Entity::attack(sf::Vector2f direction)
 
 void Entity::update(float dt)
 {
+	animTime_ += dt;
 	EntityState* state = state_->update(*this, dt);
 	if (state != nullptr) {
 		delete state_;
@@ -84,7 +91,8 @@ void Entity::damage(Attack* attack)
 {
 	hp_ -= attack->getDamage();
 	notify(HEALTH_CHANGED);
-	if (hp_ < 0.0f) {
+	if (hp_ <= 0.0f && 
+		dynamic_cast<DeathState*>(state_) == nullptr) { // ugly check
 		delete state_;
 		state_ = new DeathState();
 		state_->enter(*this);
@@ -113,11 +121,24 @@ Faction Entity::faction() const
 
 void Entity::render(sf::RenderWindow& window)
 {
+	if (activeAnimation_ != nullptr){
+		sf::Sprite sprite = activeAnimation_->getSprite(animTime_, orient_);
+		sf::Vector2f pos = getIsometricPos();
+		sprite.setPosition(pos.x - activeAnimation_->getDims() / 2.0f, 
+			pos.y - activeAnimation_->getDims() + 10.0f);
+		window.draw(sprite);
+	}
+
 	sf::CircleShape entity(collisionRadius_);
 	entity.setFillColor(color_);
 	entity.setOrigin(collisionRadius_, collisionRadius_);
-	entity.setPosition(pos_);
+	entity.setPosition(getIsometricPos());
 	window.draw(entity);
+}
+
+sf::Vector2f Entity::getIsometricPos() const
+{
+	return sf::Vector2f(pos_.x - pos_.y, (pos_.x + pos_.y) / 2.0f);
 }
 
 void Entity::setColor(sf::Color color)
@@ -159,6 +180,7 @@ void Entity::move(sf::Vector2f to, float& dt)
 		pos_ += moveSpeed_ * dirVec * dt;
 		dt = -0.1f;
 	}
+	updateOrientation(dirVec);
 }
 
 bool Entity::checkCollision(sf::Vector2f at, float radius) const
@@ -170,4 +192,27 @@ bool Entity::checkCollision(sf::Vector2f at, float radius) const
 float Entity::getPercentHP()
 {
 	return hp_ / maxhp_;
+}
+
+#define PI 3.14159265358979
+void Entity::updateOrientation(sf::Vector2f dir)
+{
+	float angle = atan2(dir.y, dir.x);
+
+	if (angle <= PI / 8.0f && angle >= -PI  / 8.0f)
+		orient_ = SE;
+	else if (angle <= 3*PI / 8.0f && angle >= PI / 8.0f)
+		orient_ = S;
+	else if (angle <= 5*PI / 8.0f && angle >= 3*PI / 8.0f)
+		orient_ = SW;
+	else if (angle <= 7*PI / 8.0f && angle >= 5*PI / 8.0f)
+		orient_ = W;
+	else if (angle <= -7 * PI / 8.0f || angle >= 7 * PI / 8.0f)
+		orient_ = NW;
+	else if (angle <= -5*PI / 8.0f && angle >= -7*PI / 8.0f)
+		orient_ = N;
+	else if (angle <= -3*PI / 8.0f && angle >= -5*PI / 8.0f)
+		orient_ = NE;
+	else if (angle <= -PI / 8.0f && angle >= -3 * PI / 8.0f)
+		orient_ = E;
 }

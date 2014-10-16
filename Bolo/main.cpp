@@ -26,11 +26,14 @@ int main()
 	MonsterAI ai;
 	monster->setAI(&ai);
 	monster->setPosition(sf::Vector2f(140, 100));
+	Monster* monster2 = new Monster;
+	monster2->setAI(&ai);
+	monster2->setPosition(sf::Vector2f(240, 100));
 
 	// inventory
 	sf::Texture inventoryTexture;
 	sf::Sprite inventorySprite;
-	inventoryTexture.loadFromFile("Inventory.bmp");
+	inventoryTexture.loadFromFile("Resources/UI/Inventory.bmp");
 	inventorySprite.setTexture(inventoryTexture);
 	Inventory inventory(&inventorySprite, hero);
 	gameUI.addElement(&inventory);
@@ -39,7 +42,7 @@ int main()
 	sf::Image weaponImage;
 	sf::Texture weaponTexture;
 	sf::Sprite weaponSprite;
-	weaponImage.loadFromFile("weapon.bmp");
+	weaponImage.loadFromFile("Resources/Items/UI/weapon.bmp");
 	weaponImage.createMaskFromColor(sf::Color(0, 0, 0), 150);
 	weaponTexture.loadFromImage(weaponImage);
 	weaponSprite.setTexture(weaponTexture);
@@ -47,7 +50,7 @@ int main()
 	sf::Image helmetImage;
 	sf::Texture helmetTexture;
 	sf::Sprite helmetSprite;
-	helmetImage.loadFromFile("helmet.bmp");
+	helmetImage.loadFromFile("Resources/Items/UI/helmet.bmp");
 	helmetImage.createMaskFromColor(sf::Color(0,0,0),150);
 	helmetTexture.loadFromImage(helmetImage);
 	helmetSprite.setTexture(helmetTexture);
@@ -64,18 +67,21 @@ int main()
 	level.setTerrain(&terrain);
 	level.addEntity(hero);
 	level.addEntity(monster);
+	level.addEntity(monster2);
 
 	hero->setLevel(&level);
 	monster->setLevel(&level);
+	monster2->setLevel(&level);
 
 	InputHandler iHandler;
 	iHandler.setUI(&gameUI);
 	iHandler.setHero(hero);
 
 	sf::View view;
-	view.setCenter(hero->getPos());
+	view.setCenter(hero->getIsometricPos());
 	view.setSize(sf::Vector2f(640, 480));
 
+	// Game loop
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -88,7 +94,7 @@ int main()
 		sf::Time dt = deltaClock.restart();
 		level.update(dt.asSeconds());
 
-		view.setCenter(hero->getPos());
+		view.setCenter(hero->getIsometricPos());
 		view.setSize(sf::Vector2f(640, 480));
 		window.setView(view);
 

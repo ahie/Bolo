@@ -5,6 +5,7 @@ Inventory::Inventory(sf::Sprite* sprite, Hero* hero) :
 	background_(sprite),
 	inventoryContainer_(InventoryContainer(sf::Vector2i(338, 223), sf::Vector2i(290, 120), sf::Vector2i(29, 29)))
 {
+	// Set clickable areas and actions.
 	equipmentContainers_.push_back(EquipmentContainer(HELMET, sf::Vector2i(454, 4), sf::Vector2i(60, 60)));
 	equipmentContainers_.push_back(EquipmentContainer(WEAPON, sf::Vector2i(338, 76), sf::Vector2i(57, 85)));
 	//equipmentContainers_.push_back(EquipmentContainer(RING, sf::Vector2i(offset...), sf::Vector2i(offset...)));
@@ -15,9 +16,12 @@ Inventory::~Inventory() {}
 
 void Inventory::render(sf::RenderWindow& window) {
 	if (visible_) {
+
+		// Render backdrop
 		background_->setPosition(window.mapPixelToCoords(sf::Vector2i(320, 0)));
 		window.draw(*background_);
 
+		// Render items in each equipment slot
 		for (auto container : equipmentContainers_) {
 			sf::Sprite* sprite = hero_->getUISprite(container.slot);
 			if (sprite != nullptr) {
@@ -25,6 +29,8 @@ void Inventory::render(sf::RenderWindow& window) {
 				window.draw(*sprite);
 			}
 		}
+
+		// Render items in the inventory
 		std::vector<InventorySprite> iSprites = hero_->getInventorySprites();
 		for (auto iSprite : iSprites) {
 			(iSprite.first)->setPosition(window.mapPixelToCoords(sf::Vector2i(
@@ -33,6 +39,8 @@ void Inventory::render(sf::RenderWindow& window) {
 			window.draw(*(iSprite.first));
 		}
 	}
+
+	// If there's an item on the cursor, render it.
 	sf::Sprite* cursorSprite = hero_->getCursorSprite();
 	if (cursorSprite != nullptr) {
 		cursorSprite->setPosition(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
@@ -42,13 +50,17 @@ void Inventory::render(sf::RenderWindow& window) {
 
 bool Inventory::handleInput(sf::Event event)
 {
+	// Toggle inventory
 	if (event.type == sf::Event::KeyPressed &&
 		event.key.code == sf::Keyboard::I) {
 		visible_ = !visible_;
 		clickable_ = !clickable_;
 		return true;
 	}
+
 	if (!clickable_) return false;
+
+	// Route click to the right action
 	if (event.type == sf::Event::MouseButtonPressed &&
 		event.mouseButton.button == sf::Mouse::Left) {
 		for (auto container : equipmentContainers_) {

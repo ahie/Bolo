@@ -23,7 +23,7 @@ public:
 		sf::CircleShape missile(hitRadius_);
 		missile.setFillColor(color_);
 		missile.setOrigin(hitRadius_, hitRadius_);
-		missile.setPosition(pos_);
+		missile.setPosition(sf::Vector2f(pos_.x - pos_.y, (pos_.x + pos_.y) / 2.0f));
 		window.draw(missile);
 	}
 private:

@@ -5,5 +5,13 @@ MonsterAI::MonsterAI() {}
 MonsterAI::~MonsterAI() {}
 void MonsterAI::think(Monster* who)
 {
-	who->attack(sf::Vector2f(0.f, -1.f));
+	sf::Vector2f clickPos(rand() % 10000 - 5000, rand() % 10000 - 5000);
+	if (rand() % 1000 < 1)
+	{
+		who->handleInput(EntityEvent(true, EntityEvent::Click::RIGHT, clickPos));
+	}
+	else if (rand() % 10000 < 1)
+	{
+		who->handleInput(EntityEvent(true, EntityEvent::Click::LEFT, clickPos));
+	}
 }

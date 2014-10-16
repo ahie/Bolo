@@ -96,6 +96,7 @@
     <ClInclude Include="AttackingState.h" />
     <ClInclude Include="DeathState.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="EntityEvent.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="Faction.h" />
     <ClInclude Include="HealthGlobe.h" />

@@ -1,6 +1,7 @@
 #pragma once
 #include "UI.h"
 #include "Hero.h"
+#include "EntityEvent.h"
 
 // Chain of responsibility: 
 // If input event not handled by ui, 
@@ -22,10 +23,10 @@ public:
 			// Set event's mouse coordinates relative to view.
 			if (event.type == sf::Event::MouseButtonPressed) {
 				sf::Vector2f coord_pos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-				event.mouseButton.x = coord_pos.x;
-				event.mouseButton.y = coord_pos.y;
+				sf::Vector2f clickPos = sf::Vector2f((coord_pos.x + 2.0f*coord_pos.y) / 2.0f, (2.0f*coord_pos.y - coord_pos.x) / 2.0f);
+				if (event.mouseButton.button == sf::Mouse::Left) hero_->handleInput(EntityEvent(true, EntityEvent::Click::LEFT, clickPos));
+				else if (event.mouseButton.button == sf::Mouse::Right) hero_->handleInput(EntityEvent(true, EntityEvent::Click::RIGHT, clickPos));
 			}
-			hero_->handleInput(event);
 		}
 	}
 private:

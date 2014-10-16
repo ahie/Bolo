@@ -1,7 +1,7 @@
 #pragma once
 
-const int TILE_HEIGHT = 20;
-const int TILE_WIDTH = 20;
+const int TILE_HEIGHT = 32;
+const int TILE_WIDTH = 32;
 
 class Tile
 {

@@ -20,15 +20,14 @@ MovingState::MovingState(Entity& entity, float x, float y) :
 
 MovingState::~MovingState() {}
 
-EntityState* MovingState::handleInput(Entity& entity, sf::Event inputEvent)
+EntityState* MovingState::handleInput(Entity& entity, EntityEvent event)
 {
-	if (inputEvent.type == sf::Event::MouseButtonPressed) {
-		if (inputEvent.mouseButton.button == sf::Mouse::Right) {
-			path_ = entity.getPath(inputEvent.mouseButton.x,
-									inputEvent.mouseButton.y);
+	if (event.clicked) {
+		if (event.clickType == EntityEvent::Click::RIGHT) {
+			path_ = entity.getPath(event.clickPos.x,event.clickPos.y);
 		}
-		if (inputEvent.mouseButton.button == sf::Mouse::Left) {
-			sf::Vector2f attackDirection = normalize(sf::Vector2f(inputEvent.mouseButton.x, inputEvent.mouseButton.y) - entity.getPos());
+		if (event.clickType == EntityEvent::Click::LEFT) {
+			sf::Vector2f attackDirection = normalize(event.clickPos - entity.getPos());
 			return new AttackingState(attackDirection);
 		}
 	}
@@ -49,5 +48,6 @@ EntityState* MovingState::update(Entity& entity, float dt)
 
 void MovingState::enter(Entity& entity)
 {
+	entity.setAnimation(WALK);
 	entity.setColor(sf::Color(0, 0, 255));
 }

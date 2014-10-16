@@ -105,6 +105,9 @@
     <ClInclude Include="Inventory.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="EntityEvent.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Entities">

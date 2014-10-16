@@ -10,7 +10,7 @@ public:
 	~MovingState();
 	virtual void enter(Entity& entity);
 	virtual EntityState* update(Entity& entity, float dt);
-	virtual EntityState* handleInput(Entity& entity, sf::Event inputEvent);
+	virtual EntityState* handleInput(Entity& entity, EntityEvent event);
 private:
 	std::vector<sf::Vector2f> path_;
 };

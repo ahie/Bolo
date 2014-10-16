@@ -8,16 +8,17 @@ public:
 	DeathState() {}
 	virtual ~DeathState() {}
 	virtual void enter(Entity& entity) {
+		entity.setAnimation(DEATH);
 		entity.setColor(sf::Color::Red);
-		timeToDeath_ = 1.0f;
+		timeToDeath_ = entity.getAnimLength();
 	}
 	virtual EntityState* update(Entity& entity, float dt) {
 		timeToDeath_ -= dt;
-		if (timeToDeath_ < 0.0f)
+		if (timeToDeath_ <= 0.01f)
 			entity.kill();
 		return nullptr;
 	}
-	virtual EntityState* handleInput(Entity& entity, sf::Event inputEvent) {
+	virtual EntityState* handleInput(Entity& entity, EntityEvent event) {
 		return nullptr;
 	}
 private:

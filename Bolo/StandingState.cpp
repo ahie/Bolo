@@ -25,17 +25,18 @@ StandingState::~StandingState()
 
 void StandingState::enter(Entity& entity)
 {
+	entity.setAnimation(STAND);
 	entity.setColor(sf::Color(0, 255, 0));
 }
 
-EntityState* StandingState::handleInput(Entity& entity, sf::Event inputEvent)
+EntityState* StandingState::handleInput(Entity& entity, EntityEvent event)
 {
-	if (inputEvent.type == sf::Event::MouseButtonPressed) {
-		if (inputEvent.mouseButton.button == sf::Mouse::Right) {
-			return new MovingState(entity,inputEvent.mouseButton.x,inputEvent.mouseButton.y);
+	if (event.clicked) {
+		if (event.clickType == EntityEvent::Click::RIGHT) {
+			return new MovingState(entity, event.clickPos.x, event.clickPos.y);
 		}
-		if (inputEvent.mouseButton.button == sf::Mouse::Left) {
-			sf::Vector2f attackDirection = normalize(sf::Vector2f(inputEvent.mouseButton.x, inputEvent.mouseButton.y) - entity.getPos());
+		if (event.clickType == EntityEvent::Click::LEFT) {
+			sf::Vector2f attackDirection = normalize(event.clickPos - entity.getPos());
 			return new AttackingState(attackDirection);
 		}
 	}

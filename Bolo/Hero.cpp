@@ -10,6 +10,19 @@ Hero::Hero() :
 			inventory_[i][j] = nullptr;
 		}
 	}
+	//ANIM TESTING
+	sf::Image* herowalk = new sf::Image();
+	sf::Image* herostand = new sf::Image();
+	sf::Image* heroattack = new sf::Image();
+	herowalk->loadFromFile("Resources/Spritesheets/Hero/walk.png");
+	herostand->loadFromFile("Resources/Spritesheets/Hero/stand.png");
+	heroattack->loadFromFile("Resources/Spritesheets/Hero/attack.png");
+	herowalk->createMaskFromColor(sf::Color(0, 0, 0), 0);
+	herostand->createMaskFromColor(sf::Color(0, 0, 0), 0);
+	heroattack->createMaskFromColor(sf::Color(0, 0, 0), 0);
+	standAnimation_ =new Animation(96, herostand);
+	walkAnimation_ =new Animation(96, herowalk);
+	attackAnimation_ =new Animation(128, heroattack);
 }
 
 Hero::~Hero() {}
