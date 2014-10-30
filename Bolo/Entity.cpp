@@ -92,7 +92,7 @@ void Entity::damage(Attack* attack)
 	hp_ -= attack->getDamage();
 	notify(HEALTH_CHANGED);
 	if (hp_ <= 0.0f && 
-		dynamic_cast<DeathState*>(state_) == nullptr) { // ugly check
+		dynamic_cast<DeathState*>(state_) == nullptr) {
 		delete state_;
 		state_ = new DeathState();
 		state_->enter(*this);
@@ -198,21 +198,12 @@ float Entity::getPercentHP()
 void Entity::updateOrientation(sf::Vector2f dir)
 {
 	float angle = atan2(dir.y, dir.x);
-
-	if (angle <= PI / 8.0f && angle >= -PI  / 8.0f)
-		orient_ = SE;
-	else if (angle <= 3*PI / 8.0f && angle >= PI / 8.0f)
-		orient_ = S;
-	else if (angle <= 5*PI / 8.0f && angle >= 3*PI / 8.0f)
-		orient_ = SW;
-	else if (angle <= 7*PI / 8.0f && angle >= 5*PI / 8.0f)
-		orient_ = W;
-	else if (angle <= -7 * PI / 8.0f || angle >= 7 * PI / 8.0f)
-		orient_ = NW;
-	else if (angle <= -5*PI / 8.0f && angle >= -7*PI / 8.0f)
-		orient_ = N;
-	else if (angle <= -3*PI / 8.0f && angle >= -5*PI / 8.0f)
-		orient_ = NE;
-	else if (angle <= -PI / 8.0f && angle >= -3 * PI / 8.0f)
-		orient_ = E;
+	orient_ = (angle <= PI / 8.0f && angle >= -PI / 8.0f) ? SE
+			: (angle <= 3 * PI / 8.0f && angle >= PI / 8.0f) ? S
+			: (angle <= 5 * PI / 8.0f && angle >= 3 * PI / 8.0f) ? SW
+			: (angle <= 7 * PI / 8.0f && angle >= 5 * PI / 8.0f) ? W
+			: (angle <= -7 * PI / 8.0f || angle >= 7 * PI / 8.0f) ? NW
+			: (angle <= -5 * PI / 8.0f && angle >= -7 * PI / 8.0f) ? N
+			: (angle <= -3 * PI / 8.0f && angle >= -5 * PI / 8.0f) ? NE
+			: E;
 }

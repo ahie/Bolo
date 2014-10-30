@@ -6,6 +6,8 @@
 
 #include <vector>
 
+// TODO: handle attacks elsewhere?
+
 class Level : public Renderable
 {
 public:

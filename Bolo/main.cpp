@@ -13,6 +13,8 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(640, 480), "Bolo");
 	sf::Clock deltaClock;
 
+	// Manual initialization of game objects for testing...
+
 	// ui, deathmessage
 	UI gameUI;
 	HeroDeath heroDeath;
