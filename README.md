@@ -1,10 +1,4 @@
 # README #
 
 ### What is this repository for? ###
-
-### How do I get set up? ###
-
-### Contribution guidelines ###
-
-### Who do I talk to? ###
-
+This repository houses the source code for a work-in-progress isometric ARPG inspired by Diablo I.
