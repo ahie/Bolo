@@ -26,6 +26,7 @@ public:
 		walkAnimation_ = new Animation(160, megawalk);
 		attackAnimation_ = new Animation(160, megaattack);
 		deathAnimation_ = new Animation(160, megadeath);
+		state_->enter(*this);
 	}
 	~Monster() {}
 	void setAI(MonsterAI* ai) { ai_ = ai; }

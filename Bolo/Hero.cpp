@@ -23,6 +23,7 @@ Hero::Hero() :
 	standAnimation_ =new Animation(96, herostand);
 	walkAnimation_ =new Animation(96, herowalk);
 	attackAnimation_ =new Animation(128, heroattack);
+	state_->enter(*this);
 }
 
 Hero::~Hero() {}

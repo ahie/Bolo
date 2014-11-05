@@ -21,7 +21,8 @@ Entity::Entity() :
 	faction_(NEUTRAL),
 	aDescription_(AttackDescriptor(50.0f, 5.0f, 0.2f, MISSILE, SINGLE_TARGET, PURE)),
 	animTime_(0.0f),
-	attackSpeed_(0.3f)
+	attackSpeed_(0.3f),
+	orient_(S)
 {
 }
 
