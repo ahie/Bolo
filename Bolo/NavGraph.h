@@ -1,6 +1,6 @@
 #pragma once
-#include <SFML\System\Vector2.hpp>
-#include <SFML\Graphics.hpp>
+#include <SFML/System/Vector2.hpp>
+#include <SFML/Graphics.hpp>
 #include <vector>
 
 const float INF = 100000000000.0f;

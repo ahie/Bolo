@@ -1,8 +1,8 @@
 #include "StandingState.h"
 #include "MovingState.h"
 #include "AttackingState.h"
-#include "entity.h"
-#include <SFML\Graphics\Color.hpp>
+#include "Entity.h"
+#include <SFML/Graphics/Color.hpp>
 
 
 static sf::Vector2f normalize(const sf::Vector2f& source)

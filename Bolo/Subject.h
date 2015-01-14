@@ -1,6 +1,9 @@
-#include "Oberserver.h"
+#pragma once
+
+#include "Observer.h"
 #include "Event.h"
 #include <list>
+#include <algorithm>
 
 class Subject
 {

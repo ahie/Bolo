@@ -1,91 +1,64 @@
 #pragma once
-#include "Entity.h"
-#include "Terrain.h"
-#include "Attack.h"
-#include "Missile.h"
-
+#include "Renderable.h"
+#include "LevelEventInterface.h"
+#include "Item.h"
 #include <vector>
 
-// TODO: handle attacks elsewhere?
+struct AttackDescriptor;
 
-class Level : public Renderable
+class Entity;
+class Hero;
+class Terrain;
+class Attack;
+class Missile;
+class NavGraph;
+class LevelEvent;
+
+const float PICKUP_RADIUS = 50.f;
+
+// Level class: handles high level game logic of the currently active level.
+// Enables entities to interact with each other(attacks), the terrain and items.
+
+// TODO: handle attacks elsewhere?
+// TODO: handle loot elsewhere?
+
+class Level : public Renderable,
+	public LevelEventInterface
 {
 public:
-	Level(): terrain_(nullptr) {}
-	~Level() {}
-	void setTerrain(Terrain* terrain) { terrain_ = terrain; }
-	void setEntities(const std::vector<Entity*>& entities) { entities_ = entities; }
-	void addEntity(Entity* entity) { entities_.push_back(entity); }
-	void addAttack(Attack* attack)
-	{
-		Missile* missile = dynamic_cast<Missile*>(attack);
-		if (missile) {
-			missiles_.push_back(missile);
-		}
-		else {
-			attacks_.push_back(attack);
-		}
-	}
-	NavGraph* getNavGraph()
-	{
-		return terrain_->getNavGraph();
-	}
-	bool checkMissileCollision(Missile* missile)
-	{
-		for (auto entity : entities_) {
-			if (missile->belongsTo() != entity->faction()) {
-				if (entity->checkCollision(missile->getPos(), missile->getRadius())) {
-					return true;
-				}
-			}
-		}
-		return terrain_->checkCollision(missile->getPos());
-	}
-	void update(float dt)
-	{		
-		// Remove dead monsters
-		entities_.erase(std::remove_if(entities_.begin(), entities_.end(), 
-			[](Entity* e){
-			if (!e->isAlive()) {
-				delete e;
-				return true;
-			}
-			return false;
-		}), entities_.end());
+	Level();
+	~Level();
 
-		for (auto entity : entities_) entity->update(dt);
-		for (auto missile : missiles_) {
-			missile->advance(dt);
-			if (checkMissileCollision(missile)) {
-				attacks_.push_back(missile);
-			}
-		}
-		for (auto attack : attacks_) {
-			// Erase missiles that have collided
-			missiles_.erase(find(missiles_.begin(),missiles_.end(),attack));
-			for (auto entity : entities_) {
-				if (attack->belongsTo() != entity->faction()) {
-					if (entity->checkCollision(attack->getPos(), attack->getRadius())) {
-						entity->damage(attack);
-						if (attack->getType() == SINGLE_TARGET)
-							break;
-					}
-				}
-			}
-			delete attack;
-		}
-		attacks_.clear();
-	}
-	void render(sf::RenderWindow& window)
-	{
-		terrain_->render(window);
-		for (auto entity : entities_) entity->render(window);
-		for (auto missile : missiles_) missile->render(window);
-	}
+	void setTerrain(Terrain* terrain);
+	void setEntities(const std::vector<Entity*>& entities);
+	void addEntity(Entity* entity);
+	void addAttack(AttackDescriptor& aDescriptor, Entity& source, sf::Vector2f& pos, sf::Vector2f& direction);
+	NavGraph* getNavGraph();
+	void update(float dt);
+	void render(sf::RenderWindow& window);
+
+	void addSpawnableItem(ItemDescriptor item);
+	void spawnItem(sf::Vector2f pos);
+	void dropItem(Item* item, sf::Vector2f pos);
+	bool attemptLoot(Hero* hero, sf::Vector2f pos);
+
+	// LevelEventInterface
+	virtual int getMonsterCount();
+	virtual void spawnEntity(Entity* e);
+	virtual void addLevelEvent(LevelEvent* e);
+	virtual Level* getPointerToLevel();
 
 private:
+	bool checkMissileCollision(Missile* missile);
+	void handleAttacks(float dt);
+
+	std::vector<ItemDescriptor> spawnableItems_;
+	std::vector<Item*> groundItems_;
+
 	Terrain* terrain_;
 	std::vector<Entity*> entities_;
 	std::vector<Attack*> attacks_;
 	std::vector<Missile*> missiles_;
+
+	std::vector<LevelEvent*> levelEvents_;
 };

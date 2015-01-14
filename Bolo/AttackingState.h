@@ -2,7 +2,7 @@
 #include "EntityState.h"
 #include "Entity.h"
 #include "StandingState.h"
-#include <SFML\Graphics\Color.hpp>
+#include <SFML/Graphics/Color.hpp>
 
 class AttackingState : public EntityState
 {

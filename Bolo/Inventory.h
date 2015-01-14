@@ -2,13 +2,13 @@
 #include "Hero.h"
 #include "UIElement.h"
 
-#include <SFML\Window\Mouse.hpp>
+#include <SFML/Window/Mouse.hpp>
 #include <vector>
 
 class Inventory : public UIElement
 {
 public:
-	Inventory(sf::Sprite* sprite, Hero* hero);
+	Inventory(Hero* hero);
 	~Inventory();
 	virtual void render(sf::RenderWindow& window);
 	virtual bool handleInput(sf::Event event);
@@ -39,7 +39,8 @@ private:
 		sf::Vector2i size;
 	};
 	Hero* hero_;
-	sf::Sprite* background_;
+	sf::Texture texture_;
+	sf::Sprite background_;
 	std::vector<EquipmentContainer> equipmentContainers_;
 	InventoryContainer inventoryContainer_;
 };

@@ -26,6 +26,26 @@
     <ClCompile Include="Inventory.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="UIFunctions.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Level.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelLoader.cpp" />
+    <ClCompile Include="ext\jsoncpp\jsoncpp.cpp">
+      <Filter>Json</Filter>
+    </ClCompile>
+    <ClCompile Include="Terrain.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InputHandler.h" />
@@ -47,9 +67,6 @@
     </ClInclude>
     <ClInclude Include="EntityState.h">
       <Filter>Entities\States</Filter>
-    </ClInclude>
-    <ClInclude Include="Oberserver.h">
-      <Filter>Observer</Filter>
     </ClInclude>
     <ClInclude Include="Subject.h">
       <Filter>Observer</Filter>
@@ -73,9 +90,6 @@
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="UIElement.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="HealthGlobe.h">
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="AttackingState.h">
@@ -108,6 +122,38 @@
     <ClInclude Include="EntityEvent.h">
       <Filter>Entities</Filter>
     </ClInclude>
+    <ClInclude Include="Diablo.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="UIButton.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIFunctions.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="LevelLoader.h" />
+    <ClInclude Include="Animation.h">
+      <Filter>Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelEvent.h">
+      <Filter>LevelEvents</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelEventInterface.h">
+      <Filter>LevelEvents</Filter>
+    </ClInclude>
+    <ClInclude Include="VictoryMessage.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureContainer.h">
+      <Filter>Animation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Entities">
@@ -130,6 +176,15 @@
     </Filter>
     <Filter Include="Item">
       <UniqueIdentifier>{8556cf8c-a9d5-4ad6-bd32-8dbde517de92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Animation">
+      <UniqueIdentifier>{727652ae-04e1-4a29-a2dd-86543586c302}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Json">
+      <UniqueIdentifier>{9e9e77d8-5df2-4b87-a6ba-4385dd0df87f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LevelEvents">
+      <UniqueIdentifier>{b854bcc9-0e35-412a-b5e5-09ce72dce200}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -14,7 +14,7 @@ public:
 	}
 	virtual EntityState* update(Entity& entity, float dt) {
 		timeToDeath_ -= dt;
-		if (timeToDeath_ <= 0.01f)
+		if (timeToDeath_ <= 0.05f)
 			entity.kill();
 		return nullptr;
 	}

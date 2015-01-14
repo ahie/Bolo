@@ -1,50 +1,86 @@
 #include "Hero.h"
+#include "Level.h"
+#include "DeathState.h"
+#include "TextureContainer.h"
 
-Hero::Hero() : 
+Hero::Hero() : Entity("Hero", FRIEND, AttackDescriptor(50.0f, 10.0f, 2.0f, MISSILE, SINGLE_TARGET, PURE, "Arrow.png")),
+	cursorItem_(nullptr),
+	chestArmor_(nullptr),
 	helmet_(nullptr), 
-	weapon_(nullptr) 
+	weapon_(nullptr)
 {
-	faction_ = FRIEND;
 	for (int i = 0; i < INVENTORY_WIDTH; i++) {
 		for (int j = 0; j < INVENTORY_HEIGHT; j++) {
 			inventory_[i][j] = nullptr;
 		}
 	}
-	//ANIM TESTING
-	sf::Image* herowalk = new sf::Image();
-	sf::Image* herostand = new sf::Image();
-	sf::Image* heroattack = new sf::Image();
-	herowalk->loadFromFile("Resources/Spritesheets/Hero/walk.png");
-	herostand->loadFromFile("Resources/Spritesheets/Hero/stand.png");
-	heroattack->loadFromFile("Resources/Spritesheets/Hero/attack.png");
-	herowalk->createMaskFromColor(sf::Color(0, 0, 0), 0);
-	herostand->createMaskFromColor(sf::Color(0, 0, 0), 0);
-	heroattack->createMaskFromColor(sf::Color(0, 0, 0), 0);
-	standAnimation_ =new Animation(96, herostand);
-	walkAnimation_ =new Animation(96, herowalk);
-	attackAnimation_ =new Animation(128, heroattack);
-	state_->enter(*this);
+	addAnimation(STAND, new Animation(96, TextureContainer::instance().getTexture("Resources/Spritesheets/Hero/stand.png")));
+	addAnimation(WALK, new Animation(96, TextureContainer::instance().getTexture("Resources/Spritesheets/Hero/walk.png")));
+	addAnimation(ATTACK, new Animation(128, TextureContainer::instance().getTexture("Resources/Spritesheets/Hero/attack.png")));
+	addAnimation(DEATH, new Animation(96, TextureContainer::instance().getTexture("Resources/Spritesheets/Hero/stand.png")));
+	getState()->enter(*this);
 }
 
-Hero::~Hero() {}
+Hero::~Hero() 
+{
+	// delete items owned by hero
+	delete cursorItem_;
+	cursorItem_ = nullptr;
+	for (int i = 0; i < INVENTORY_WIDTH; i++) {
+		for (int j = 0; j < INVENTORY_HEIGHT; j++) {
+			// =D
+			inventoryClick(i, j);
+			delete cursorItem_;
+			cursorItem_ = nullptr;
+		}
+	}
+	delete chestArmor_;
+	delete helmet_;
+	delete weapon_;
+}
 
 void Hero::kill()
 {
 	notify(HERO_DIED);
 }
 
+void Hero::handleInput(EntityEvent event)
+{
+	if (event.clickType == EntityEvent::Click::LEFT &&
+		cursorItem_ != nullptr) {
+		getLevel()->dropItem(cursorItem_, getPos());
+		cursorItem_ = nullptr;
+		return;
+	}
+	if (event.clickType == EntityEvent::Click::LEFT &&
+		getLevel()->attemptLoot(this, getPos())) {
+		return;
+	}
+	Entity::handleInput(event);
+}
+
+void Hero::applyItemModifiers(const StatModifiers& mods)
+{
+	for (auto mod : mods) {
+		applyModifier(mod);
+	}
+	notify(HERO_STAT_CHANGE);
+}
+
 void Hero::equip(ItemSlot slot)
 {
 	Item** item = pointerToSlot(slot);
 	if (cursorItem_ == nullptr) {
-		unequip(*item);
+		if (*item != nullptr)
+			unequip((*item)->getStatModifiers());
 		cursorItem_ = *item;
 		*item = nullptr;
 		return;
 	}
 	if (cursorItem_->getSlot() == slot) {
-		unequip(*item);
-		// TODO: equip modifiers
+		if (*item != nullptr)
+			unequip((*item)->getStatModifiers());
+		applyItemModifiers(cursorItem_->getStatModifiers());
 		Item* placeholder = *item;
 		*item = cursorItem_;
 		cursorItem_ = placeholder;
@@ -106,9 +142,13 @@ bool Hero::addItem(Item* item, int x, int y)
 	return true;
 }
 
-void Hero::unequip(Item* item)
+void Hero::unequip(StatModifiers mods)
 {
-	// TODO: reverse modifiers
+	for (auto mod : mods) {
+		mod.second = -mod.second;
+		applyModifier(mod);
+	}
+	notify(HERO_STAT_CHANGE);
 }
 
 sf::Sprite* Hero::getUISprite(ItemSlot slot)
@@ -153,6 +193,9 @@ Item** Hero::pointerToSlot(ItemSlot slot)
 		break;
 	case WEAPON:
 		slotPtr = &weapon_;
+		break;
+	case CHEST_ARMOR:
+		slotPtr = &chestArmor_;
 		break;
 	default:
 		break;

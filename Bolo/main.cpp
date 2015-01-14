@@ -1,109 +1,23 @@
-#include "UI.h"
+#include "Game.h"
 #include "InputHandler.h"
-#include "Level.h"
-#include "Monster.h"
-#include "Hero.h"
-#include "HeroDeath.h"
-#include "Inventory.h"
-#include "Item.h"
-#include <SFML\System\Clock.hpp>
+#include <SFML/System/Clock.hpp>
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(640, 480), "Bolo");
+	sf::RenderWindow window(sf::VideoMode(640, 480), "Bolo", sf::Style::Titlebar | sf::Style::Close);
+	window.setVerticalSyncEnabled(true);
 	sf::Clock deltaClock;
 
-	// Manual initialization of game objects for testing...
-
-	// ui, deathmessage
-	UI gameUI;
-	HeroDeath heroDeath;
-	gameUI.addElement(&heroDeath);
-
-	// entities
-	Hero* hero = new Hero;
-	hero->addObserver(&heroDeath);
-	hero->setPosition(sf::Vector2f(50, 50));
-	Monster* monster = new Monster;
-	MonsterAI ai;
-	monster->setAI(&ai);
-	monster->setPosition(sf::Vector2f(140, 100));
-	Monster* monster2 = new Monster;
-	monster2->setAI(&ai);
-	monster2->setPosition(sf::Vector2f(240, 100));
-
-	// inventory
-	sf::Texture inventoryTexture;
-	sf::Sprite inventorySprite;
-	inventoryTexture.loadFromFile("Resources/UI/Inventory.bmp");
-	inventorySprite.setTexture(inventoryTexture);
-	Inventory inventory(&inventorySprite, hero);
-	gameUI.addElement(&inventory);
-
-	// items
-	sf::Image weaponImage;
-	sf::Texture weaponTexture;
-	sf::Sprite weaponSprite;
-	weaponImage.loadFromFile("Resources/Items/UI/weapon.bmp");
-	weaponImage.createMaskFromColor(sf::Color(0, 0, 0), 150);
-	weaponTexture.loadFromImage(weaponImage);
-	weaponSprite.setTexture(weaponTexture);
-
-	sf::Image helmetImage;
-	sf::Texture helmetTexture;
-	sf::Sprite helmetSprite;
-	helmetImage.loadFromFile("Resources/Items/UI/helmet.bmp");
-	helmetImage.createMaskFromColor(sf::Color(0,0,0),150);
-	helmetTexture.loadFromImage(helmetImage);
-	helmetSprite.setTexture(helmetTexture);
-
-	Item helmet(&helmetSprite, HELMET, 2, 2);
-	Item weapon(&weaponSprite, WEAPON, 2, 3);
-	hero->loot(&helmet);
-	hero->loot(&weapon);
-
-
-	// terrain
-	Terrain terrain(10,10);
-	Level level;
-	level.setTerrain(&terrain);
-	level.addEntity(hero);
-	level.addEntity(monster);
-	level.addEntity(monster2);
-
-	hero->setLevel(&level);
-	monster->setLevel(&level);
-	monster2->setLevel(&level);
-
-	InputHandler iHandler;
-	iHandler.setUI(&gameUI);
-	iHandler.setHero(hero);
-
-	sf::View view;
-	view.setCenter(hero->getIsometricPos());
-	view.setSize(sf::Vector2f(640, 480));
+	Game* game = new Game();
+	InputHandler iHandler(game);
 
 	// Game loop
 	while (window.isOpen())
 	{
 		sf::Event event;
-		while (window.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-				window.close();
-			iHandler.handleInput(window,event);
-		}
-		sf::Time dt = deltaClock.restart();
-		level.update(dt.asSeconds());
-
-		view.setCenter(hero->getIsometricPos());
-		view.setSize(sf::Vector2f(640, 480));
-		window.setView(view);
-
-		window.clear(sf::Color(50,50,50));
-		level.render(window);
-		gameUI.render(window);
-		window.display();
+		while (window.pollEvent(event)) iHandler.handleInput(window,event);
+		game->update(deltaClock.restart().asSeconds());
+		game->render(window);
 	}
 
 	return 0;

@@ -21,6 +21,8 @@ void NavGraph::generate(Terrain* from)
 				vertices_.push_back(new Vertex(i*TILE_WIDTH / 2 + TILE_WIDTH / 4, j*TILE_HEIGHT / 2 + TILE_HEIGHT / 4));
 		}
 	}
+
+	// slow..
 	for (auto v : vertices_){
 		std::vector<Vertex*> neighbors;
 		for (auto u : vertices_) {
@@ -124,6 +126,7 @@ std::vector<sf::Vector2f> NavGraph::getPath(sf::Vector2f& start, sf::Vector2f& e
 	return path; // No path found
 }
 
+// Visualize graph, for testing
 void NavGraph::render(sf::RenderWindow& wnd)
 {
 	for (auto v : vertices_) {

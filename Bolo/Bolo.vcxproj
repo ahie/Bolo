@@ -39,10 +39,13 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Bolo\Bolo\ext\boost_1_56_0;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Bolo\Bolo\ext\boost_1_56_0;$(IncludePath);C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\include;F:\Koodia\Koulu\Project1\trunk\Peli\Bolo\ext\jsoncpp</IncludePath>
+    <LibraryPath>$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSDK_LibraryPath_x86);C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\lib</LibraryPath>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>C:\Bolo\Bolo\ext\boost_1_56_0;$(IncludePath)</IncludePath>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -52,11 +55,13 @@
       <AdditionalIncludeDirectories>$(SolutionDir)\Bolo\ext\SFML-2.1\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SFML_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BrowseInformation>true</BrowseInformation>
+      <EnablePREfast>false</EnablePREfast>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)\Bolo\ext\SFML-2.1\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <Profile>true</Profile>
     </Link>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
@@ -71,6 +76,9 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)\Bolo\ext\SFML-2.1\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SFML_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <EnablePREfast>false</EnablePREfast>
+      <BrowseInformation>true</BrowseInformation>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -78,48 +86,71 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)\Bolo\ext\SFML-2.1\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics-s.lib;sfml-window-s.lib;sfml-system-s.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/SUBSYSTEM:windows
+/ENTRY:mainCRTStartup %(AdditionalOptions)</AdditionalOptions>
     </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="ext\jsoncpp\jsoncpp.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="Inventory.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Level.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MonsterAI.cpp" />
     <ClCompile Include="MovingState.cpp" />
     <ClCompile Include="NavGraph.cpp" />
+    <ClCompile Include="LevelLoader.cpp" />
     <ClCompile Include="StandingState.cpp" />
+    <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="UIFunctions.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
+    <ClInclude Include="TextureContainer.h" />
     <ClInclude Include="Attack.h" />
     <ClInclude Include="AttackingState.h" />
     <ClInclude Include="DeathState.h" />
+    <ClInclude Include="Diablo.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityEvent.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="Faction.h" />
-    <ClInclude Include="HealthGlobe.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="Hero.h" />
     <ClInclude Include="EntityState.h" />
     <ClInclude Include="HeroDeath.h" />
+    <ClInclude Include="HUD.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Level.h" />
+    <ClInclude Include="LevelEvent.h" />
+    <ClInclude Include="LevelEventInterface.h" />
+    <ClInclude Include="LevelLoader.h" />
+    <ClInclude Include="UIFunctions.h" />
     <ClInclude Include="Missile.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="MonsterAI.h" />
     <ClInclude Include="MovingState.h" />
     <ClInclude Include="NavGraph.h" />
-    <ClInclude Include="Oberserver.h" />
+    <ClInclude Include="Observer.h" />
     <ClInclude Include="Renderable.h" />
     <ClInclude Include="StandingState.h" />
     <ClInclude Include="Subject.h" />
     <ClInclude Include="Terrain.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="UI.h" />
+    <ClInclude Include="UIButton.h" />
     <ClInclude Include="UIElement.h" />
+    <ClInclude Include="VictoryMessage.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

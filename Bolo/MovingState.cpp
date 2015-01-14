@@ -2,7 +2,7 @@
 #include "StandingState.h"
 #include "AttackingState.h"
 #include "Hero.h"
-#include <SFML\Graphics\Color.hpp>
+#include <SFML/Graphics/Color.hpp>
 
 
 static sf::Vector2f normalize(const sf::Vector2f& source)

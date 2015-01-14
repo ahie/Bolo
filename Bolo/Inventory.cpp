@@ -1,13 +1,17 @@
 #include "Inventory.h"
 
-Inventory::Inventory(sf::Sprite* sprite, Hero* hero) :
+Inventory::Inventory(Hero* hero) :
 	UIElement(false, false), hero_(hero),
-	background_(sprite),
 	inventoryContainer_(InventoryContainer(sf::Vector2i(338, 223), sf::Vector2i(290, 120), sf::Vector2i(29, 29)))
 {
+	texture_.loadFromFile("Resources/UI/Inventory.bmp");
+	background_.setTexture(texture_);
+
 	// Set clickable areas and actions.
 	equipmentContainers_.push_back(EquipmentContainer(HELMET, sf::Vector2i(454, 4), sf::Vector2i(60, 60)));
 	equipmentContainers_.push_back(EquipmentContainer(WEAPON, sf::Vector2i(338, 76), sf::Vector2i(57, 85)));
+	equipmentContainers_.push_back(EquipmentContainer(CHEST_ARMOR, sf::Vector2i(452, 76), sf::Vector2i(57, 85)));
+	// TODO: add all item slots
 	//equipmentContainers_.push_back(EquipmentContainer(RING, sf::Vector2i(offset...), sf::Vector2i(offset...)));
 	//...
 }
@@ -18,14 +22,14 @@ void Inventory::render(sf::RenderWindow& window) {
 	if (visible_) {
 
 		// Render backdrop
-		background_->setPosition(window.mapPixelToCoords(sf::Vector2i(320, 0)));
-		window.draw(*background_);
+		background_.setPosition(window.mapPixelToCoords(sf::Vector2i(320, 0)));
+		window.draw(background_);
 
 		// Render items in each equipment slot
 		for (auto container : equipmentContainers_) {
 			sf::Sprite* sprite = hero_->getUISprite(container.slot);
 			if (sprite != nullptr) {
-				sprite->setPosition(window.mapPixelToCoords(container.offset));
+				(*sprite).setPosition(window.mapPixelToCoords(container.offset));
 				window.draw(*sprite);
 			}
 		}
@@ -33,7 +37,7 @@ void Inventory::render(sf::RenderWindow& window) {
 		// Render items in the inventory
 		std::vector<InventorySprite> iSprites = hero_->getInventorySprites();
 		for (auto iSprite : iSprites) {
-			(iSprite.first)->setPosition(window.mapPixelToCoords(sf::Vector2i(
+			(*iSprite.first).setPosition(window.mapPixelToCoords(sf::Vector2i(
 				iSprite.second.x*inventoryContainer_.dimensions.x + inventoryContainer_.offset.x,
 				iSprite.second.y*inventoryContainer_.dimensions.y + inventoryContainer_.offset.y)));
 			window.draw(*(iSprite.first));
@@ -43,7 +47,7 @@ void Inventory::render(sf::RenderWindow& window) {
 	// If there's an item on the cursor, render it.
 	sf::Sprite* cursorSprite = hero_->getCursorSprite();
 	if (cursorSprite != nullptr) {
-		cursorSprite->setPosition(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
+		(*cursorSprite).setPosition(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
 		window.draw(*cursorSprite);
 	}
 }

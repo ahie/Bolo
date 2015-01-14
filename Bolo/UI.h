@@ -6,7 +6,12 @@ class UI: public Renderable
 {
 public:
 	UI() {}
-	virtual ~UI() {}
+	virtual ~UI() 
+	{
+		for (auto element : UIElements_) {
+			delete element;
+		}
+	}
 	void addElement(UIElement* elem)
 	{
 		UIElements_.push_back(elem);
