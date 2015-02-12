@@ -79,6 +79,7 @@ std::vector<sf::Vector2f> NavGraph::getPath(sf::Vector2f& start, sf::Vector2f& e
 		v->fScore_ = INF;
 		v->gScore_ = INF;
 	}
+	// TODO: use priority queues
 	std::vector<Vertex*> closedSet;
 	std::vector<Vertex*> openSet;
 	Vertex* startVertex = findClosestVertex(start);
@@ -91,6 +92,7 @@ std::vector<sf::Vector2f> NavGraph::getPath(sf::Vector2f& start, sf::Vector2f& e
 	while (!openSet.empty()) {
 		Vertex* current = findLowestFScore(openSet);
 		if (current == endVertex) {
+			// Reconstruct path and return
 			Vertex* next = current->cameFrom_;
 			while (next != nullptr)
 			{
